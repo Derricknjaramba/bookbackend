@@ -1,0 +1,6 @@
+CREATE TABLE books_to_borrow (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  book_id INTEGER NOT NULL,
+  quantity INTEGER DEFAULT 1,
+  FOREIGN KEY (book_id) REFERENCES books (id)
+);
