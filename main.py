@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
-    "http://localhost:5173",
+    "http://localhost:5175",
     "http://localhost",
     "http://localhost:8080",
 ]
@@ -136,7 +136,7 @@ def get_db():
 # Admin: Add a new book [TESTED]
 @app.post("/admin/add_book", response_model=BookSchema)
 def add_book(book: BookSchema, db: SessionLocal = Depends(get_db)):
-    db_book = Book(**book.dict())
+    db_book = Book(**book.dict(exclude={"id"}))
     db.add(db_book)
     db.commit()
     db.refresh(db_book)
@@ -216,3 +216,4 @@ def ask_help(help_request: HelpSchema, db: SessionLocal = Depends(get_db)):
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
